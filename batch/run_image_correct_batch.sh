@@ -64,6 +64,7 @@ echo "Run completed on: " `date`
 
 END=$(date +%s.%N)
 RUNTIME=$(echo "$END - $START" | bc -l)
+echo "Total runtime:" ${RUNTIME}
 #######################################################################################
 
 ### EOF
