@@ -1,5 +1,8 @@
 # from the base dir
 
+# open your conda env
+conda activate /data2/sserbin/conda_envs/hytools
+
 # create json config for corrections
 python modex_examples/create_config_aviris.py
 
