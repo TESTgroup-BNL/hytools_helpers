@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# other junk
+._*
+
+# SLURM log files
+hytools_job-*.*out
+

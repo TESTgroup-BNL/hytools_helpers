@@ -1,0 +1,7 @@
+# create conda environment
+conda create -p /data2/sserbin/conda_envs/hytools python=3.8
+
+# install - using setup.py
+pip install --editable /data2/sserbin/NGEE_Arctic/hytools
+
+#
