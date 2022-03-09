@@ -1,0 +1,11 @@
+# from the base dir
+
+# create json config for corrections
+python modex_examples/create_config_aviris.py
+
+# run corrections
+python modex_examples/image_correct.py --config modex_examples/configs/config_example1.json
+
+# run corrections - w/SLURM
+sbatch -w node03 -c 12 --partition compute --job-name=hytools --mail-user=sserbin@bnl.gov \
+batch/run_image_correct_batch.sh modex_examples/configs/config_example1.json
