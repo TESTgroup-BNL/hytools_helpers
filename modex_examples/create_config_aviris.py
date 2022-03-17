@@ -143,9 +143,10 @@ Options include:
     [] <---Export uncorrected images
 '''
 
-corrections = config.get("corrections", "img_corrections")
-config_dict["corrections"]  = corrections
-print("Image Corrections: "+config_dict["corrections"])
+corrections = json.loads(config.get("corrections", "img_corrections"))
+config_dict["corrections"] = corrections
+#print("Image Corrections: "+config_dict["corrections"])
+print(*config_dict["corrections"], sep = ",")
 print(" ")
 
 #Topographic Correction options
