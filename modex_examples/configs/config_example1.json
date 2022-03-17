@@ -5,7 +5,15 @@
          400
       ],
       [
-         900,
+         1337,
+         1430
+      ],
+      [
+         1800,
+         1960
+      ],
+      [
+         2450,
          2600
       ]
    ],
@@ -194,10 +202,7 @@
       "output_dir": "/data2/scratch_space/hytools/flexBRDF/",
       "suffix": "topo_brdf"
    },
-   "corrections": [
-      "brdf",
-      "topo"
-   ],
+   "corrections": "['brdf','topo']",
    "topo": {
       "type": "scs+c",
       "calc_mask": [
@@ -340,27 +345,6 @@
       "ndvi_bin_max": 1.0,
       "ndvi_perc_min": 10,
       "ndvi_perc_max": 95
-   },
-   "glint": {
-      "type": "hedley",
-      "correction_wave": 1650,
-      "apply_mask": [
-         [
-            "external",
-            {
-               "class": 1,
-               "files": {}
-            }
-         ]
-      ],
-      "deep_water_sample": {
-         "/data2/dyang/projects/shrub_elf/council/data/aviris_ng/test_images/ang20190709t193940_corr_v2v2_img": [
-            225,
-            250,
-            240,
-            260
-         ]
-      }
    },
    "resample": false,
    "num_cpus": 4

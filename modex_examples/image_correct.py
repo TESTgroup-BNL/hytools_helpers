@@ -23,12 +23,10 @@ parser.add_argument('--config', help='path to configuration file to use',
     required=True)
 args = parser.parse_args()
 print(f'Config file: {args.config}')
-#config = configparser.ConfigParser()
 config_file_in = args.config
 
 def main():
 
-    #config_file = "//modex.bnl.gov/data2/dyang/projects/shrub_elf/council/flexBRDF/config_test2.json"
     config_file = config_file_in
     
     with open(config_file, 'r') as outfile:

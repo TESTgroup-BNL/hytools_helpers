@@ -4,7 +4,8 @@
 conda activate /data2/sserbin/conda_envs/hytools
 
 # create json config for corrections
-python modex_examples/create_config_aviris.py
+#python modex_examples/create_config_aviris.py
+python modex_examples/create_config_aviris.py --config modex_examples/configs/hytools_run_setup_config.cfg
 
 # run corrections
 python modex_examples/image_correct.py --config modex_examples/configs/config_example1.json
