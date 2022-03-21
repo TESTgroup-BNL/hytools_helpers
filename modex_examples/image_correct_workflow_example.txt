@@ -3,13 +3,22 @@
 # open your conda env
 conda activate /data2/sserbin/conda_envs/hytools
 
+# edit the global options config file to setup run
+modex_examples/configs/hytools_run_setup_config.cfg
+
 # create json config for corrections
 #python modex_examples/create_config_aviris.py
 python modex_examples/create_config_aviris.py --config modex_examples/configs/hytools_run_setup_config.cfg
+# above outputs modex_examples/configs/config_example1.json
 
-# run corrections
+# e.g. run corrections - directly on modex head node (not recommended)
 python modex_examples/image_correct.py --config modex_examples/configs/config_example1.json
 
-# run corrections - w/SLURM
+# e.g. run corrections - w/SLURM (recommended)
 sbatch -w node03 -c 12 --partition compute --job-name=hytools --mail-user=sserbin@bnl.gov \
 batch/run_image_correct_batch.sh modex_examples/configs/config_example1.json
+# -w node03 what node to run on?
+# -c 12 how many CPUs to make availible on the node?
+# --partition compute name of queue 
+# --job-name=hytools name of job on the queue
+# --mail-user=sserbin@bnl.gov email to use for job updates

@@ -1,0 +1,9 @@
+# download obs data
+wget https://avng.jpl.nasa.gov/avng/y18_data/ang20180303t074310.tar.gz
+# download surface reflectance
+wget https://avng.jpl.nasa.gov/avng/y18_data/ang20180303t074310rfl.tar.gz
+
+
+# create hytools config
+python modex_examples/create_config_aviris.py --config modex_examples/configs/hytools_run_setup_config_indiaaviris.cfg
+

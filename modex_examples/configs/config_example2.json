@@ -1,0 +1,225 @@
+{
+   "bad_bands": [
+      [
+         300,
+         400
+      ],
+      [
+         1337,
+         1430
+      ],
+      [
+         1800,
+         1960
+      ],
+      [
+         2450,
+         2600
+      ]
+   ],
+   "file_type": "envi",
+   "input_files": [
+      "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_corr_v2s1_img"
+   ],
+   "anc_files": {
+      "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_corr_v2s1_img": {
+         "path_length": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            0
+         ],
+         "sensor_az": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            1
+         ],
+         "sensor_zn": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            2
+         ],
+         "solar_az": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            3
+         ],
+         "solar_zn": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            4
+         ],
+         "phase": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            5
+         ],
+         "slope": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            6
+         ],
+         "aspect": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            7
+         ],
+         "cosine_i": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            8
+         ],
+         "utc_time": [
+            "/data2/RS_GIS_Data/AVIRIS/AVIRISng_India/test_india/ang20180303t074310_rdn_v2s1_obs_ort",
+            9
+         ]
+      }
+   },
+   "export": {
+      "coeffs": true,
+      "image": true,
+      "masks": true,
+      "subset_waves": [],
+      "output_dir": "/data2/scratch_space/hytools/flexBRDF/",
+      "suffix": "topo_brdf"
+   },
+   "corrections": [
+      "topo",
+      "brdf"
+   ],
+   "topo": {
+      "type": "scs+c",
+      "calc_mask": [
+         [
+            "ndi",
+            {
+               "band_1": 850,
+               "band_2": 660,
+               "min": 0.1,
+               "max": 1.0
+            }
+         ],
+         [
+            "ancillary",
+            {
+               "name": "slope",
+               "min": 0.08726646259971647,
+               "max": "+inf"
+            }
+         ],
+         [
+            "ancillary",
+            {
+               "name": "cosine_i",
+               "min": 0.12,
+               "max": "+inf"
+            }
+         ],
+         [
+            "cloud",
+            {
+               "method": "zhai_2018",
+               "cloud": true,
+               "shadow": true,
+               "T1": 0.01,
+               "t2": 0.1,
+               "t3": 0.25,
+               "t4": 0.5,
+               "T7": 9,
+               "T8": 9
+            }
+         ]
+      ],
+      "apply_mask": [
+         [
+            "ndi",
+            {
+               "band_1": 850,
+               "band_2": 660,
+               "min": 0.1,
+               "max": 1.0
+            }
+         ],
+         [
+            "ancillary",
+            {
+               "name": "slope",
+               "min": 0.08726646259971647,
+               "max": "+inf"
+            }
+         ],
+         [
+            "ancillary",
+            {
+               "name": "cosine_i",
+               "min": 0.12,
+               "max": "+inf"
+            }
+         ]
+      ],
+      "c_fit_type": "nnls"
+   },
+   "brdf": {
+      "solar_zn_type": "scene",
+      "type": "flex",
+      "grouped": false,
+      "geometric": "li_dense_r",
+      "volume": "ross_thick",
+      "b/r": 2.5,
+      "h/b": 2,
+      "sample_perc": 0.1,
+      "interp_kind": "linear",
+      "calc_mask": [
+         [
+            "ndi",
+            {
+               "band_1": 850,
+               "band_2": 660,
+               "min": 0.05,
+               "max": 1.0
+            }
+         ],
+         [
+            "kernel_finite",
+            {}
+         ],
+         [
+            "ancillary",
+            {
+               "name": "sensor_zn",
+               "min": 0.03490658503988659,
+               "max": "inf"
+            }
+         ],
+         [
+            "neon_edge",
+            {
+               "radius": 30
+            }
+         ],
+         [
+            "cloud",
+            {
+               "method": "zhai_2018",
+               "cloud": true,
+               "shadow": true,
+               "T1": 0.01,
+               "t2": 0.1,
+               "t3": 0.25,
+               "t4": 0.5,
+               "T7": 9,
+               "T8": 9
+            }
+         ]
+      ],
+      "apply_mask": [
+         [
+            "ndi",
+            {
+               "band_1": 850,
+               "band_2": 660,
+               "min": 0.05,
+               "max": 1.0
+            }
+         ]
+      ],
+      "bin_type": "dynamic",
+      "num_bins": 18,
+      "ndvi_bin_min": 0.05,
+      "ndvi_bin_max": 1.0,
+      "ndvi_perc_min": 10,
+      "ndvi_perc_max": 95
+   },
+   "resample": false,
+   "num_cpus": 1
+}

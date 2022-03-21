@@ -203,8 +203,8 @@
       "suffix": "topo_brdf"
    },
    "corrections": [
-      "brdf",
-      "topo"
+      "topo",
+      "brdf"
    ],
    "topo": {
       "type": "scs+c",
@@ -294,7 +294,7 @@
             {
                "band_1": 850,
                "band_2": 660,
-               "min": 0.1,
+               "min": 0.05,
                "max": 1.0
             }
          ],

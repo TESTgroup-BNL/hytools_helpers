@@ -134,3 +134,5 @@ dmypy.json
 # SLURM log files
 hytools_job-*.*out
 
+# Mac OSX junk
+.DS*

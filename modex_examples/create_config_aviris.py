@@ -55,11 +55,7 @@ config_dict = {}
 
 #Only coefficients for good bands will be calculated - hand curated BBL
 in_bad_bands = json.loads(config.get("badbands", "bad_bands"))
-#print("Bad bands: "+in_bad_bands)
-#print(" ")
-
 config_dict['bad_bands'] = in_bad_bands
-#print("Bad bands: "+config_dict['bad_bands'])
 print("Bad bands: ")
 print(*config_dict['bad_bands'], sep = ",")
 print(" ")
@@ -83,7 +79,7 @@ per image is also a dictionary where the key is the dataset name and the
 value is list consisting of the file path and the band number.
 '''
 
-# -- these options could also be defined in the config file
+# -- !!these options could also be defined in the config file!!
 config_dict['file_type'] = 'envi'
 aviris_anc_names = ['path_length','sensor_az','sensor_zn',
                     'solar_az', 'solar_zn','phase','slope',
@@ -142,10 +138,8 @@ Options include:
     ['brdf','topo','glint']
     [] <---Export uncorrected images
 '''
-
 corrections = json.loads(config.get("corrections", "img_corrections"))
 config_dict["corrections"] = corrections
-#print("Image Corrections: "+config_dict["corrections"])
 print(*config_dict["corrections"], sep = ",")
 print(" ")
 
@@ -216,7 +210,9 @@ config_dict["brdf"]  = {}
 
 # Options are 'line','scene', or a float for a custom solar zn
 # Custom solar zenith angle should be in radians
-config_dict["brdf"]['solar_zn_type'] ='scene'
+config_dict["brdf"]['solar_zn_type'] = json.loads(config.get("corrections", "solar_zn_type"))
+print(config_dict["brdf"]['solar_zn_type'])
+print(" ")
 
 # !!these should all be options in the config file!!!
 # THIS SHOULD BE AN IF/ELSE for BRDF TYPE SELECTED IN TEH CONFIG FILE!!
@@ -240,31 +236,36 @@ config_dict["brdf"]['solar_zn_type'] ='scene'
 #----------------------
 # ## Flex BRDF configs
 # ##------------------
-config_dict["brdf"]['type'] =  'flex'
-config_dict["brdf"]['grouped'] =  True
+config_dict["brdf"]['type'] = json.loads(config.get("corrections", "brdf_type"))
+config_dict["brdf"]['grouped'] =  json.loads(config.get("corrections", "grouped_brdf").lower())
 config_dict["brdf"]['geometric'] = 'li_dense_r'
 config_dict["brdf"]['volume'] = 'ross_thick'
 config_dict["brdf"]["b/r"] = 2.5
 config_dict["brdf"]["h/b"] = 2
 config_dict["brdf"]['sample_perc'] = 0.1
 config_dict["brdf"]['interp_kind'] = 'linear'
-config_dict["brdf"]['calc_mask'] = [["ndi", {'band_1': 850,'band_2': 660,
-                                              'min': 0.1,'max': 1.0}],
-                                    ['kernel_finite',{}],
-                                    ['ancillary',{'name':'sensor_zn',
-                                                  'min':np.radians(2),'max':'inf' }],
-                                    ['neon_edge',{'radius': 30}],
-                                    ['cloud',{'method':'zhai_2018',
-                                              'cloud':True,'shadow':True,
-                                              'T1': 0.01,'t2': 1/10,'t3': 1/4,
-                                              't4': 1/2,'T7': 9,'T8': 9}]]
+config_dict["brdf"]['calc_mask'] = [[config.get("mask", "brdf_mask"), 
+                                            {'band_1': int(config.get("mask", "band_1")),
+                                            'band_2': int(config.get("mask", "band_2")),
+                                            'min': float(config.get("mask", "min")),
+                                            'max': float(config.get("mask", "max"))}],
+                                            ['kernel_finite',{}],
+                                            ['ancillary',{'name':'sensor_zn',
+                                            'min':np.radians(2),'max':'inf' }],
+                                            ['neon_edge',{'radius': 30}],
+                                            ['cloud',{'method':'zhai_2018',
+                                            'cloud':True,'shadow':True,
+                                            'T1': 0.01,'t2': 1/10,'t3': 1/4,
+                                            't4': 1/2,'T7': 9,'T8': 9}]]
 
 # set image mask from config file
-config_dict["brdf"]['apply_mask'] = [[config.get("mask", "brdf_mask"), {'band_1': int(config.get("mask", "band_1")),
-                                                'band_2': int(config.get("mask", "band_2")),
-                                                'min': float(config.get("mask", "min")),
-                                                'max': float(config.get("mask", "max"))}]]
-#print("BRDF mask: "+config_dict["brdf"]['apply_mask'])
+config_dict["brdf"]['apply_mask'] = [[config.get("mask", "brdf_mask"), 
+                                                {'band_1': int(config.get("mask", "band_1")),
+                                                    'band_2': int(config.get("mask", "band_2")),
+                                                    'min': float(config.get("mask", "min")),
+                                                    'max': float(config.get("mask", "max"))}]]
+print("BRDF Mask: ")
+print(config_dict["brdf"]['apply_mask'])
 print(" ")
 
 # !!these should all be options in the config file!!!
@@ -344,12 +345,18 @@ Types supported:
       interpolation using Scipy interp1d
 config_dict["resampler"] only needed when resampling == True
 '''
-#!!! need to update this to accept arguments from config file using elif statements !!
-config_dict["resample"]  = False
-# config_dict["resampler"]  = {}
-# config_dict["resampler"]['type'] =  'cubic'
-# config_dict["resampler"]['out_waves'] = []
-# config_dict["resampler"]['out_fwhm'] = []
+wv_resample = json.loads(config.get("resamplewaves", "wv_resample").lower())
+config_dict["resample"] = wv_resample
+if wv_resample is False :
+    print("No wavelength resampling requested")
+elif wv_resample is True :
+    print("Wavelength resampling:")
+    config_dict["resampler"]  = {}
+    config_dict["resampler"]['type'] = json.loads(config.get("resamplewaves", "resampler"))
+    config_dict["resampler"]['out_waves'] = json.loads(config.get("resamplewaves", "out_waves"))
+    config_dict["resampler"]['out_fwhm'] = json.loads(config.get("resamplewaves", "out_fwhm"))
+    print(config_dict["resampler"]['type'])
+print(" ")
 
 # Remove bad bands from output waves
 # for wavelength in range(450,660,100):
