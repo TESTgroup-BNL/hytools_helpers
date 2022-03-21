@@ -7,3 +7,5 @@ wget https://avng.jpl.nasa.gov/avng/y18_data/ang20180303t074310rfl.tar.gz
 # create hytools config
 python modex_examples/create_config_aviris.py --config modex_examples/configs/hytools_run_setup_config_indiaaviris.cfg
 
+# run the corrections
+sbatch -w node03 -c 12 --partition compute --job-name=hytools --mail-user=sserbin@bnl.gov batch/run_image_correct_batch.sh modex_examples/configs/config_example2.json
